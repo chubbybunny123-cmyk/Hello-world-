@@ -1,0 +1,155 @@
+<style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef6f8;
+      padding: 20px;
+      text-align: center;
+      margin: 0;
+    }
+
+    h1 {
+      color: #009e60;
+      margin-bottom: 16px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: lightgrey;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    input,
+    button,
+    select {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #009e60;
+      color: grey;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background: #007c4b;
+    }
+
+    /* Goals container separate and wider than form */
+    #goalsList {
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      padding: 0 10px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .goal-card {
+      background: #ffffff ;
+      padding: 18px 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      width: 280px;
+      /* fixed width for 3 per row comfortably */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 960px) {
+      .goal-card {
+        width: 45%;
+        /* 2 cards per row */
+      }
+    }
+
+    @media (max-width: 550px) {
+      .goal-card {
+        width: 100%;
+        /* 1 card per row */
+      }
+    }
+
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .progress-container {
+      background: #ddd;
+      height: 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .progress-bar {
+      background: #009e60;
+      height: 100%;
+      width: 0%;
+      border-radius: 12px;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .info {
+      font-size: 1rem;
+      margin: 6px 0;
+    }
+
+    .highlight {
+      font-weight: bold;
+    }
+
+    .celebration {
+      color: #ff9800;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    /* Stack input and button vertically inside cards */
+    .goal-input-container {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .goal-input-container input {
+      font-size: 1rem;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .goal-input-container button {
+      padding: 10px 0;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    /* .goal-name {
+        color: red;
+    } */
+  </style>
