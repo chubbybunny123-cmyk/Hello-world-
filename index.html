@@ -1,6 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>G.HERBO APP :
   <title>MPESA Junior APP :
       Save your money </title>
 
@@ -8,8 +10,24 @@
 
 <body>
   <div class="container">
-    <h1>G.HERBO APP :
     <h1>MPESA Junior APP :
       Save your money 💰</h1>
 
     <p>🎨 Choose an avatar:</p>
+    <select id="avatarSelect">
+      <option value="🧒">🧒</option>
+      <option value="👧">👧</option>
+      <option value="👦🏾">👦🏾</option>
+      <option value="👩🏽‍🎓">👩🏽‍🎓</option>
+    </select>
+
+    <input type="text" id="goalName" placeholder="🎯 Goal name (e.g. Bicycle)" />
+    <input type="number" id="goalAmount" placeholder="💵 Amount to save (e.g. 1000)" />
+    <button onclick="addGoal()">➕ Add Goal</button>
+  </div>
+
+  <div id="goalsList"></div>
+
+</body>
+
+</html>
