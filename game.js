@@ -2,6 +2,10 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const startBtn = document.getElementById('startBtn');
 const scoreText = document.getElementById('score');
+const jumpSound = document.getElementById('jumpSound');
+
+let monkeyImg = new Image();
+monkeyImg.src = 'monkey.png';
 
 let monkey, gravity, obstacles, score, isJumping, gameInterval;
 
@@ -13,7 +17,7 @@ function resetGame() {
     height: 40,
     dy: 0,
   };
-  gravity = 0.7;
+  gravity = 0.6;
   isJumping = false;
   obstacles = [];
   score = 0;
@@ -21,12 +25,11 @@ function resetGame() {
 }
 
 function drawMonkey() {
-  ctx.fillStyle = '#8b5cf6';
-  ctx.fillRect(monkey.x, monkey.y, monkey.width, monkey.height);
+  ctx.drawImage(monkeyImg, monkey.x, monkey.y, monkey.width, monkey.height);
 }
 
 function drawObstacles() {
-  ctx.fillStyle = '#dc2626';
+  ctx.fillStyle = '#654321';
   obstacles.forEach((ob) => {
     ctx.fillRect(ob.x, ob.y, ob.width, ob.height);
   });
@@ -45,7 +48,7 @@ function update() {
   }
 
   obstacles.forEach((ob, i) => {
-    ob.x -= 3;
+    ob.x -= 4;
 
     if (
       monkey.x < ob.x + ob.width &&
@@ -72,11 +75,13 @@ function jump() {
   if (!isJumping) {
     monkey.dy = -12;
     isJumping = true;
+    jumpSound.currentTime = 0;
+    jumpSound.play();
   }
 }
 
 function spawnObstacle() {
-  const height = Math.floor(Math.random() * 80) + 30;
+  const height = Math.floor(Math.random() * 60) + 40;
   obstacles.push({
     x: canvas.width,
     y: canvas.height - height,
@@ -87,7 +92,7 @@ function spawnObstacle() {
 
 function gameLoop() {
   update();
-  if (Math.random() < 0.03) {
+  if (Math.random() < 0.02) {
     spawnObstacle();
   }
 }
@@ -102,4 +107,8 @@ document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
     jump();
   }
+});
+
+canvas.addEventListener('touchstart', () => {
+  jump();
 });
