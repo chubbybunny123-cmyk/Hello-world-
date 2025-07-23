@@ -14,6 +14,7 @@ const spikeImg = new Image();
 spikeImg.src = 'spike.png';
 
 let monkey, gravity, obstacles, score, highScore = 0, isJumping, gameInterval, gamePaused = false;
+let spawnCooldown = 0;
 
 function resetGame() {
   monkey = {
@@ -27,6 +28,7 @@ function resetGame() {
   isJumping = false;
   obstacles = [];
   score = 0;
+  spawnCooldown = 0;
   scoreText.textContent = 'Score: 0';
 }
 
@@ -96,13 +98,16 @@ function spawnObstacle() {
     width: 30,
     height: height,
   });
+  spawnCooldown = 100; // wait 100 frames (~1.6s)
 }
 
 function gameLoop() {
   if (!gamePaused) {
     update();
-    if (Math.random() < 0.02) {
+    if (spawnCooldown <= 0) {
       spawnObstacle();
+    } else {
+      spawnCooldown--;
     }
   }
 }
