@@ -1,11 +1,11 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to top, #a3e635, #86efac);
+  margin: 0;
+  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
 }
 
 .game-container {
@@ -13,8 +13,10 @@ body {
 }
 
 canvas {
-  background: #fff7ed;
-  border: 4px solid #3b3b3b;
+  display: block;
+  background: url('jungle.jpg') no-repeat center center;
+  background-size: cover;
+  border: 4px solid #333;
   border-radius: 10px;
 }
 
@@ -30,4 +32,10 @@ button {
 
 button:hover {
   background-color: #eab308;
+}
+
+#score {
+  font-size: 20px;
+  margin-top: 10px;
+  color: white;
 }
