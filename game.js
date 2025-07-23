@@ -1,13 +1,19 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+
 const startBtn = document.getElementById('startBtn');
 const scoreText = document.getElementById('score');
-const jumpSound = document.getElementById('jumpSound');
 
-let monkeyImg = new Image();
+const jumpSound = new Audio('jump.mp3');
+const gameOverSound = new Audio('gameover.mp3');
+
+const monkeyImg = new Image();
 monkeyImg.src = 'monkey.png';
 
-let monkey, gravity, obstacles, score, isJumping, gameInterval;
+const spikeImg = new Image();
+spikeImg.src = 'spike.png';
+
+let monkey, gravity, obstacles, score, highScore = 0, isJumping, gameInterval, gamePaused = false;
 
 function resetGame() {
   monkey = {
@@ -17,7 +23,7 @@ function resetGame() {
     height: 40,
     dy: 0,
   };
-  gravity = 0.5;                // slightly lighter gravity
+  gravity = 0.5;
   isJumping = false;
   obstacles = [];
   score = 0;
@@ -28,19 +34,10 @@ function drawMonkey() {
   ctx.drawImage(monkeyImg, monkey.x, monkey.y, monkey.width, monkey.height);
 }
 
-function drawObstacle(ob) {
-  // Draw triangle-like tree spikes
-  ctx.fillStyle = '#3b3b3b';
-  ctx.beginPath();
-  ctx.moveTo(ob.x, ob.y + ob.height); // bottom left
-  ctx.lineTo(ob.x + ob.width / 2, ob.y); // top center
-  ctx.lineTo(ob.x + ob.width, ob.y + ob.height); // bottom right
-  ctx.closePath();
-  ctx.fill();
-}
-
 function drawObstacles() {
-  obstacles.forEach(drawObstacle);
+  obstacles.forEach(ob => {
+    ctx.drawImage(spikeImg, ob.x, ob.y, ob.width, ob.height);
+  });
 }
 
 function update() {
@@ -58,21 +55,23 @@ function update() {
   obstacles.forEach((ob, i) => {
     ob.x -= 4;
 
-    // Collision (use bounding box approx for triangle)
     if (
       monkey.x < ob.x + ob.width &&
       monkey.x + monkey.width > ob.x &&
       monkey.y < ob.y + ob.height &&
       monkey.y + monkey.height > ob.y
     ) {
+      gameOverSound.play();
       clearInterval(gameInterval);
-      alert('Game Over! Final Score: ' + score);
+      alert(`Game Over!\nScore: ${score}\nHigh Score: ${highScore}`);
+      return;
     }
 
     if (ob.x + ob.width < 0) {
       obstacles.splice(i, 1);
       score++;
-      scoreText.textContent = 'Score: ' + score;
+      if (score > highScore) highScore = score;
+      scoreText.textContent = `Score: ${score} | High Score: ${highScore}`;
     }
   });
 
@@ -82,7 +81,7 @@ function update() {
 
 function jump() {
   if (!isJumping) {
-    monkey.dy = -13; // ⬆️ Higher jump
+    monkey.dy = -13;
     isJumping = true;
     jumpSound.currentTime = 0;
     jumpSound.play();
@@ -90,7 +89,7 @@ function jump() {
 }
 
 function spawnObstacle() {
-  const height = Math.floor(Math.random() * 30) + 20; // ⬇️ Smaller spikes
+  const height = Math.floor(Math.random() * 30) + 30;
   obstacles.push({
     x: canvas.width,
     y: canvas.height - height,
@@ -100,9 +99,11 @@ function spawnObstacle() {
 }
 
 function gameLoop() {
-  update();
-  if (Math.random() < 0.02) {
-    spawnObstacle();
+  if (!gamePaused) {
+    update();
+    if (Math.random() < 0.02) {
+      spawnObstacle();
+    }
   }
 }
 
@@ -115,9 +116,9 @@ startBtn.addEventListener('click', () => {
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
     jump();
+  } else if (e.code === 'KeyP') {
+    gamePaused = !gamePaused;
   }
 });
 
-canvas.addEventListener('touchstart', () => {
-  jump();
-});
+canvas.addEventListener('touchstart', jump);
