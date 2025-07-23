@@ -21,12 +21,12 @@ function resetGame() {
 }
 
 function drawMonkey() {
-  ctx.fillStyle = '#8b5cf6'; // purple monkey
+  ctx.fillStyle = '#8b5cf6';
   ctx.fillRect(monkey.x, monkey.y, monkey.width, monkey.height);
 }
 
 function drawObstacles() {
-  ctx.fillStyle = '#dc2626'; // red obstacle
+  ctx.fillStyle = '#dc2626';
   obstacles.forEach((ob) => {
     ctx.fillRect(ob.x, ob.y, ob.width, ob.height);
   });
@@ -47,7 +47,6 @@ function update() {
   obstacles.forEach((ob, i) => {
     ob.x -= 3;
 
-    // Collision detection
     if (
       monkey.x < ob.x + ob.width &&
       monkey.x + monkey.width > ob.x &&
@@ -55,7 +54,7 @@ function update() {
       monkey.y + monkey.height > ob.y
     ) {
       clearInterval(gameInterval);
-      alert('Game Over! Score: ' + score);
+      alert('Game Over! Final Score: ' + score);
     }
 
     if (ob.x + ob.width < 0) {
