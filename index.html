@@ -1,33 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <title>MPESA Junior APP :
-      Save your money </title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monkey Jump Game</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="container">
-    <h1>MPESA Junior APP :
-      Save your money 💰</h1>
-
-    <p>🎨 Choose an avatar:</p>
-    <select id="avatarSelect">
-      <option value="🧒">🧒</option>
-      <option value="👧">👧</option>
-      <option value="👦🏾">👦🏾</option>
-      <option value="👩🏽‍🎓">👩🏽‍🎓</option>
-    </select>
-
-    <input type="text" id="goalName" placeholder="🎯 Goal name (e.g. Bicycle)" />
-    <input type="number" id="goalAmount" placeholder="💵 Amount to save (e.g. 1000)" />
-    <button onclick="addGoal()">➕ Add Goal</button>
+  <div class="game-container">
+    <h1>🐒 Monkey Jump</h1>
+    <canvas id="gameCanvas" width="480" height="320"></canvas>
+    <button id="startBtn">Start Game</button>
+    <p id="score">Score: 0</p>
   </div>
-
-  <div id="goalsList"></div>
-
+  <script src="game.js"></script>
 </body>
-
 </html>
