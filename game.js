@@ -17,7 +17,7 @@ function resetGame() {
     height: 40,
     dy: 0,
   };
-  gravity = 0.6;
+  gravity = 0.5;                // slightly lighter gravity
   isJumping = false;
   obstacles = [];
   score = 0;
@@ -28,11 +28,19 @@ function drawMonkey() {
   ctx.drawImage(monkeyImg, monkey.x, monkey.y, monkey.width, monkey.height);
 }
 
+function drawObstacle(ob) {
+  // Draw triangle-like tree spikes
+  ctx.fillStyle = '#3b3b3b';
+  ctx.beginPath();
+  ctx.moveTo(ob.x, ob.y + ob.height); // bottom left
+  ctx.lineTo(ob.x + ob.width / 2, ob.y); // top center
+  ctx.lineTo(ob.x + ob.width, ob.y + ob.height); // bottom right
+  ctx.closePath();
+  ctx.fill();
+}
+
 function drawObstacles() {
-  ctx.fillStyle = '#654321';
-  obstacles.forEach((ob) => {
-    ctx.fillRect(ob.x, ob.y, ob.width, ob.height);
-  });
+  obstacles.forEach(drawObstacle);
 }
 
 function update() {
@@ -50,6 +58,7 @@ function update() {
   obstacles.forEach((ob, i) => {
     ob.x -= 4;
 
+    // Collision (use bounding box approx for triangle)
     if (
       monkey.x < ob.x + ob.width &&
       monkey.x + monkey.width > ob.x &&
@@ -73,7 +82,7 @@ function update() {
 
 function jump() {
   if (!isJumping) {
-    monkey.dy = -12;
+    monkey.dy = -13; // ⬆️ Higher jump
     isJumping = true;
     jumpSound.currentTime = 0;
     jumpSound.play();
@@ -81,7 +90,7 @@ function jump() {
 }
 
 function spawnObstacle() {
-  const height = Math.floor(Math.random() * 60) + 40;
+  const height = Math.floor(Math.random() * 30) + 20; // ⬇️ Smaller spikes
   obstacles.push({
     x: canvas.width,
     y: canvas.height - height,
